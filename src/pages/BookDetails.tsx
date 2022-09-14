@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { jsonToHtml } from "@contentstack/json-rte-serializer";
 
 export const BookDetails: React.FC = () => {
   const { url } = useParams();
@@ -19,16 +20,19 @@ export const BookDetails: React.FC = () => {
     isLoading,
     isError,
     data: books,
-  } = useQuery(["BOOK_DETAILS"], () =>
-    fetch(
-      `https://cdn.contentstack.io/v3/content_types/book/entries?environment=development&query={"url": "/${url}"}`,
-      {
-        headers: {
-          api_key: process.env.REACT_APP_API_KEY!,
-          access_token: process.env.REACT_APP_ACCESS_TOKEN!,
-        },
-      }
-    ).then((res) => res.json())
+  } = useQuery(
+    ["BOOK_DETAILS"],
+    () =>
+      fetch(
+        `https://cdn.contentstack.io/v3/content_types/book/entries?environment=development&query={"url": "/${url}"}`,
+        {
+          headers: {
+            api_key: process.env.REACT_APP_API_KEY!,
+            access_token: process.env.REACT_APP_ACCESS_TOKEN!,
+          },
+        }
+      ).then((res) => res.json()),
+    { keepPreviousData: false }
   );
 
   const authourId = books?.entries && books.entries[0].author[0].uid;
@@ -55,6 +59,8 @@ export const BookDetails: React.FC = () => {
 
   const { title, amazon_url, pages, description, image } = books.entries[0];
 
+  const serializedDescription = jsonToHtml(description);
+
   return (
     <Grid>
       <Col span="content" mr="xl">
@@ -76,11 +82,7 @@ export const BookDetails: React.FC = () => {
         <Title size="h1" mb="xl">
           {title}
         </Title>
-        {description.children.map((item: any) => (
-          <Text key={item.uid} mb="xl">
-            {item.children[0].text}
-          </Text>
-        ))}
+        <div dangerouslySetInnerHTML={{ __html: serializedDescription }} />
       </Col>
     </Grid>
   );

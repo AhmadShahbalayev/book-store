@@ -6,38 +6,20 @@ import {
   Loader,
   Container,
 } from "@mantine/core";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 import { Banner } from "../components/Banner";
 import { AppCard } from "../components/AppCard";
 
 import hero from "../assets/images/hero.jpg";
+import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
 
 export const Paginated: React.FC = () => {
-  const BOOKS = gql`
-    query GetAllPaginatedBooks($limit: Int!, $skip: Int!) {
-      all_book(limit: $limit, skip: $skip) {
-        items {
-          title
-          imageConnection {
-            edges {
-              node {
-                url
-              }
-            }
-          }
-          url
-        }
-        total
-      }
-    }
-  `;
-
   const PAGE_SIZE = 4;
   const [activePage, setPage] = useState(0);
 
-  const { loading, error, data } = useQuery(BOOKS, {
+  const { loading, error, data } = useQuery(GET_ALL_BOOKS, {
     variables: { limit: PAGE_SIZE, skip: activePage * PAGE_SIZE },
   });
 

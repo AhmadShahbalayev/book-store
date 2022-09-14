@@ -78,7 +78,7 @@ export const AppCard: React.FC<IProps> = ({ title, image, url }) => {
       <div className={classes.overlay} />
 
       <div className={classes.content}>
-        <Text size="lg" className={classes.title} weight={500}>
+        <Text size="lg" className={`${classes.title} line-clamp`} weight={500}>
           {title}
         </Text>
       </div>

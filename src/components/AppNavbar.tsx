@@ -18,7 +18,7 @@ export const AppNavbar: React.FC<{ opened: boolean }> = ({ opened }) => {
         active={location.pathname === "/"}
       />
       <NavLink
-        label="Infinite Scroll (under development...)"
+        label="Infinite Scroll"
         component={Link}
         to="/infinite-scroll"
         active={location.pathname === "/infinite-scroll"}
