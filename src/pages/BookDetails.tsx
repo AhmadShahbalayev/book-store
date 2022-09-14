@@ -32,7 +32,7 @@ export const BookDetails: React.FC = () => {
           },
         }
       ).then((res) => res.json()),
-    { keepPreviousData: false }
+    { queryHash: url }
   );
 
   const authourId = books?.entries && books.entries[0].author[0].uid;
