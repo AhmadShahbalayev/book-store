@@ -4,7 +4,7 @@ export const apolloClient = new ApolloClient({
   uri: `https://graphql.contentstack.com/stacks/${process.env.REACT_APP_API_KEY}?environment=${process.env.NODE_ENV}`,
   headers: {
     access_token:
-      process.env.NODE_ENV == "development"
+      process.env.NODE_ENV === "development"
         ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
         : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
   },

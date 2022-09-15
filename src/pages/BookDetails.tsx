@@ -15,6 +15,7 @@ import { jsonToHtml } from "@contentstack/json-rte-serializer";
 
 export const BookDetails: React.FC = () => {
   const { url } = useParams();
+  const urlQuery = `query={"url": "/${url}"}`;
 
   const {
     isLoading,
@@ -24,12 +25,12 @@ export const BookDetails: React.FC = () => {
     ["BOOK_DETAILS"],
     () =>
       fetch(
-        `https://cdn.contentstack.io/v3/content_types/book/entries?environment=development&query={"url": "/${url}"}`,
+        `https://cdn.contentstack.io/v3/content_types/book/entries?environment=${process.env.NODE_ENV}&${urlQuery}`,
         {
           headers: {
             api_key: process.env.REACT_APP_API_KEY!,
             access_token:
-              process.env.NODE_ENV == "development"
+              process.env.NODE_ENV === "development"
                 ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
                 : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
           },
@@ -44,12 +45,12 @@ export const BookDetails: React.FC = () => {
     ["AUTHOER_DETAILS"],
     () =>
       fetch(
-        `https://cdn.contentstack.io/v3/content_types/author/entries/${authourId}?environment=development`,
+        `https://cdn.contentstack.io/v3/content_types/author/entries/${authourId}?environment=${process.env.NODE_ENV}`,
         {
           headers: {
             api_key: process.env.REACT_APP_API_KEY!,
             access_token:
-              process.env.NODE_ENV == "development"
+              process.env.NODE_ENV === "development"
                 ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
                 : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
           },
