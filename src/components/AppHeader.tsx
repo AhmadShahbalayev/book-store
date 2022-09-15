@@ -33,7 +33,7 @@ export const AppHeader: React.FC<IProps> = ({
         </MediaQuery>
         <Group onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
           <Image width={50} height={50} src={imgPath} alt="Logo" />
-          <Title size="h3" color="gray.7">
+          <Title size="h3" color="gray.7" data-testid="header-title">
             {title}
           </Title>
         </Group>

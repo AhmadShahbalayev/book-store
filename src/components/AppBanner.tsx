@@ -5,7 +5,7 @@ interface IProps {
   label: string;
 }
 
-export const Banner: React.FC<IProps> = ({ imgPath, label }) => {
+export const AppBanner: React.FC<IProps> = ({ imgPath, label }) => {
   return (
     <Center
       style={{
@@ -16,7 +16,7 @@ export const Banner: React.FC<IProps> = ({ imgPath, label }) => {
       }}
       mb="md"
     >
-      <Title size="h1" color="gray.7">
+      <Title size="h1" color="gray.7" data-testid="banner-title">
         {label}
       </Title>
     </Center>

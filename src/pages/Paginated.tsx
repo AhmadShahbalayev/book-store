@@ -9,7 +9,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
-import { Banner } from "../components/Banner";
+import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
 import hero from "../assets/images/hero.jpg";
@@ -27,7 +27,7 @@ export const Paginated: React.FC = () => {
 
   return (
     <>
-      <Banner imgPath={hero} label="All programming books in one place!" />
+      <AppBanner imgPath={hero} label="All programming books in one place!" />
       {loading ? (
         <Center style={{ height: 250 }}>
           <Loader variant="bars" />

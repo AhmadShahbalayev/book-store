@@ -10,6 +10,7 @@ export const AppNavbar: React.FC<{ opened: boolean }> = ({ opened }) => {
       hiddenBreakpoint="sm"
       hidden={!opened}
       width={{ sm: 200, lg: 300 }}
+      data-testid="navbar"
     >
       <NavLink
         label="Paginated"
