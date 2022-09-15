@@ -28,7 +28,10 @@ export const BookDetails: React.FC = () => {
         {
           headers: {
             api_key: process.env.REACT_APP_API_KEY!,
-            access_token: process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
+            access_token:
+              process.env.NODE_ENV == "development"
+                ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
+                : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
           },
         }
       ).then((res) => res.json()),
@@ -45,7 +48,10 @@ export const BookDetails: React.FC = () => {
         {
           headers: {
             api_key: process.env.REACT_APP_API_KEY!,
-            access_token: process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
+            access_token:
+              process.env.NODE_ENV == "development"
+                ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
+                : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
           },
         }
       ).then((res) => res.json()),
