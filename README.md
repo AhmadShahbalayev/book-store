@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Book Store App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was meant to serve you as e-library to find all the programming books you need!.
+
+The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
