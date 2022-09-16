@@ -17,6 +17,7 @@ export const InfiniteScroll: React.FC = () => {
     variables: { limit: PAGE_SIZE, skip: 0 },
     onCompleted: () => setPage((prev) => prev + 1),
     fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
   });
 
   const intersectorRef = useRef<any>(null);
@@ -86,7 +87,7 @@ export const InfiniteScroll: React.FC = () => {
         </SimpleGrid>
         <div ref={intersectorRef} />
         {loading && (
-          <Center style={{ height: 250 }}>
+          <Center style={{ height: 100 }}>
             <Loader variant="bars" />
           </Center>
         )}
