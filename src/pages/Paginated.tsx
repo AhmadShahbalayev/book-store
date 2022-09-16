@@ -5,6 +5,7 @@ import {
   Button,
   Loader,
   Container,
+  Paper,
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
@@ -12,7 +13,6 @@ import { useState } from "react";
 import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
-import hero from "../assets/images/hero.jpg";
 import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
 
 export const Paginated: React.FC = () => {
@@ -26,8 +26,8 @@ export const Paginated: React.FC = () => {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <>
-      <AppBanner imgPath={hero} label="All programming books in one place!" />
+    <Paper>
+      <AppBanner label="All programming books in one place!" />
       {loading ? (
         <Center style={{ height: 250 }}>
           <Loader variant="bars" />
@@ -71,6 +71,6 @@ export const Paginated: React.FC = () => {
           </Center>
         </Container>
       )}
-    </>
+    </Paper>
   );
 };

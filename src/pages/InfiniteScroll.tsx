@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
-import hero from "../assets/images/hero.jpg";
 import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
 
 const PAGE_SIZE = 10;
@@ -65,7 +64,7 @@ export const InfiniteScroll: React.FC = () => {
 
   return (
     <>
-      <AppBanner imgPath={hero} label="All programming books in one place!" />
+      <AppBanner label="All programming books in one place!" />
       <Container>
         <SimpleGrid
           breakpoints={[
