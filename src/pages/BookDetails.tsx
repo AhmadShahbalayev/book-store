@@ -8,58 +8,36 @@ import {
   Button,
   Group,
   LoadingOverlay,
+  createStyles,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
+import { QUERY_KEYS } from "../common/queryKeys";
+import { BookDetailsService } from "../services/bookDetails";
+import { AuthorService } from "../services/authorDetails";
 
 export const BookDetails: React.FC = () => {
   const { url } = useParams();
-  const urlQuery = `query={"url": "/${url}"}`;
+  const navigate = useNavigate();
 
   const {
     isLoading,
     isError,
     data: books,
   } = useQuery(
-    ["BOOK_DETAILS"],
-    () =>
-      fetch(
-        `https://cdn.contentstack.io/v3/content_types/book/entries?environment=${process.env.NODE_ENV}&${urlQuery}`,
-        {
-          headers: {
-            api_key: process.env.REACT_APP_API_KEY!,
-            access_token:
-              process.env.NODE_ENV === "development"
-                ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
-                : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
-          },
-        }
-      ).then((res) => res.json()),
+    [QUERY_KEYS.BOOK_DETAILS],
+    () => BookDetailsService.getBookDetails(url),
     { queryHash: url }
   );
 
-  const authourId = books?.entries && books.entries[0].author[0].uid;
+  const authourId = books?.entries?.[0].author?.[0].uid;
 
   const { data: authorDetails } = useQuery(
-    ["AUTHOER_DETAILS"],
-    () =>
-      fetch(
-        `https://cdn.contentstack.io/v3/content_types/author/entries/${authourId}?environment=${process.env.NODE_ENV}`,
-        {
-          headers: {
-            api_key: process.env.REACT_APP_API_KEY!,
-            access_token:
-              process.env.NODE_ENV === "development"
-                ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
-                : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
-          },
-        }
-      ).then((res) => res.json()),
+    [QUERY_KEYS.AUTHOR_DETAILS],
+    () => AuthorService.getAuthorDetails(authourId),
     { enabled: !!authourId }
   );
-
-  const navigate = useNavigate();
 
   if (isLoading) return <LoadingOverlay visible overlayBlur={1} />;
   if (isError) return <p>Error occured!</p>;
@@ -69,8 +47,8 @@ export const BookDetails: React.FC = () => {
   const serializedDescription = jsonToHtml(description);
 
   return (
-    <Grid>
-      <Col span="content" mr="xl">
+    <Grid gutter={50}>
+      <Grid.Col md={6} lg={3}>
         <Image src={image.url} alt={title} mb="xl" />
         <Group mb="xl">
           <Text>{authorDetails?.entry?.title}</Text>
@@ -84,13 +62,13 @@ export const BookDetails: React.FC = () => {
             <Button>Buy now!</Button>
           </Anchor>
         </Group>
-      </Col>
-      <Col span={6}>
+      </Grid.Col>
+      <Grid.Col md={6} lg={8}>
         <Title size="h1" mb="xl">
           {title}
         </Title>
         <div dangerouslySetInnerHTML={{ __html: serializedDescription }} />
-      </Col>
+      </Grid.Col>
     </Grid>
   );
 };

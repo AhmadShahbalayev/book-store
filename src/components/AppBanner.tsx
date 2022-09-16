@@ -1,4 +1,4 @@
-import { Center, Title } from "@mantine/core";
+import { Center, MediaQuery, Title } from "@mantine/core";
 
 interface IProps {
   imgPath: string;
@@ -15,10 +15,18 @@ export const AppBanner: React.FC<IProps> = ({ imgPath, label }) => {
         borderRadius: 10,
       }}
       mb="md"
+      px="md"
     >
-      <Title size="h1" color="gray.7" data-testid="banner-title">
-        {label}
-      </Title>
+      <MediaQuery query="(max-width: 500px)" styles={{ fontSize: 20 }}>
+        <Title
+          align="center"
+          size="h1"
+          color="gray.7"
+          data-testid="banner-title"
+        >
+          {label}
+        </Title>
+      </MediaQuery>
     </Center>
   );
 };
