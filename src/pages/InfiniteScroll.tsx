@@ -8,7 +8,7 @@ import { AppCard } from "../components/AppCard";
 import hero from "../assets/images/hero.jpg";
 import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 
 export const InfiniteScroll: React.FC = () => {
   const [page, setPage] = useState(0);
