@@ -13,7 +13,7 @@ import { useState } from "react";
 import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
-import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
+import { GET_ALL_BOOKS } from "../graphql/book.query";
 
 export const Paginated: React.FC = () => {
   const PAGE_SIZE = 4;

@@ -1,4 +1,5 @@
 import { render, screen, cleanup } from "@testing-library/react";
+
 import { AppFooter } from "../AppFooter";
 
 afterEach(cleanup);

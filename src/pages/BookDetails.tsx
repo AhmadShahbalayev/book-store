@@ -3,19 +3,19 @@ import {
   Image,
   Title,
   Grid,
-  Col,
   Anchor,
   Button,
   Group,
   LoadingOverlay,
-  createStyles,
 } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
-import { QUERY_KEYS } from "../common/queryKeys";
+
 import { BookDetailsService } from "../services/bookDetails";
 import { AuthorService } from "../services/authorDetails";
+
+import { QUERY_KEYS } from "../common/queryKeys";
 
 export const BookDetails: React.FC = () => {
   const { url } = useParams();
@@ -24,6 +24,7 @@ export const BookDetails: React.FC = () => {
   const {
     isLoading,
     isError,
+    isSuccess: isBooksReady,
     data: books,
   } = useQuery(
     [QUERY_KEYS.BOOK_DETAILS],
@@ -31,9 +32,9 @@ export const BookDetails: React.FC = () => {
     { queryHash: url }
   );
 
-  const authourId = books?.entries?.[0].author?.[0].uid;
+  const authourId = isBooksReady && books.entries[0].author[0].uid;
 
-  const { data: authorDetails } = useQuery(
+  const { data: authorDetails, isSuccess: isAuthorReady } = useQuery(
     [QUERY_KEYS.AUTHOR_DETAILS],
     () => AuthorService.getAuthorDetails(authourId),
     { enabled: !!authourId }
@@ -51,7 +52,7 @@ export const BookDetails: React.FC = () => {
       <Grid.Col md={6} lg={3}>
         <Image src={image.url} alt={title} mb="xl" />
         <Group mb="xl">
-          <Text>{authorDetails?.entry?.title}</Text>
+          <Text>{isAuthorReady && authorDetails.entry.title}</Text>
           <Text>{pages} Pages</Text>
         </Group>
         <Group>

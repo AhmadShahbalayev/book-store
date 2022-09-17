@@ -1,10 +1,11 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { Paginated } from "../Paginated";
-import { GET_ALL_BOOKS } from "../../graphql/queries/book.query";
 import { BrowserRouter } from "react-router-dom";
-import { MockBooks } from "../../mocks/books";
+
 import { InfiniteScroll } from "../InfiniteScroll";
+
+import { GET_ALL_BOOKS } from "../../graphql/book.query";
+import { MockBooks } from "../../mocks/books";
 import { setupIntersectionObserverMock } from "../../common/utils";
 
 beforeEach(() => setupIntersectionObserverMock());

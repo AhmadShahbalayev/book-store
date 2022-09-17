@@ -1,64 +1,57 @@
-import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { SimpleGrid, Center, Loader, Container } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
-import { GET_ALL_BOOKS } from "../graphql/queries/book.query";
+import { GET_ALL_BOOKS } from "../graphql/book.query";
 
 const PAGE_SIZE = 10;
 
 export const InfiniteScroll: React.FC = () => {
   const [page, setPage] = useState(0);
 
-  const { loading, error, data, fetchMore } = useQuery(GET_ALL_BOOKS, {
-    variables: { limit: PAGE_SIZE, skip: 0 },
-    onCompleted: () => setPage((prev) => prev + 1),
-    fetchPolicy: "cache-and-network",
-    notifyOnNetworkStatusChange: true,
-  });
+  const { loading, error, data, networkStatus, fetchMore } = useQuery(
+    GET_ALL_BOOKS,
+    {
+      variables: { limit: PAGE_SIZE, skip: 0 },
+      onCompleted: () => setPage((prev) => prev + 1),
+      fetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true,
+    }
+  );
 
-  const intersectorRef = useRef<any>(null);
+  const isBooksReady = networkStatus === NetworkStatus.ready;
 
-  const options: IntersectionObserverInit = {
-    rootMargin: "0px",
-    threshold: 1,
-  };
+  const { ref: intersectorRef, inView } = useInView();
 
   useEffect(() => {
-    const io = new IntersectionObserver((changes) => {
-      const target = changes[0];
+    if (
+      inView &&
+      isBooksReady &&
+      data.all_book.items.length < data.all_book.total
+    )
+      fetchMore({
+        variables: { limit: PAGE_SIZE, skip: page * PAGE_SIZE },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return previousResult;
 
-      if (
-        target.isIntersecting &&
-        data.all_book.items.length < data.all_book.total
-      )
-        fetchMore({
-          variables: { limit: PAGE_SIZE, skip: page * PAGE_SIZE },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return previousResult;
-
-            return {
-              all_book: {
-                __typename: "AllBook",
-                items: [
-                  ...previousResult.all_book.items,
-                  ...fetchMoreResult.all_book.items,
-                ],
-                total: previousResult.all_book.total,
-              },
-            };
-          },
-        });
-    }, options);
-
-    if (intersectorRef.current) io.observe(intersectorRef.current);
-
-    return () => {
-      if (intersectorRef.current) io.unobserve(intersectorRef.current);
-    };
-  }, [page]);
+          return {
+            all_book: {
+              __typename: "AllBook",
+              items: [
+                ...previousResult.all_book.items,
+                ...fetchMoreResult.all_book.items,
+              ],
+              total: previousResult.all_book.total,
+            },
+          };
+        },
+      });
+    // eslint-disable-next-line
+  }, [inView]);
 
   if (error) return <p>{error.message}</p>;
 

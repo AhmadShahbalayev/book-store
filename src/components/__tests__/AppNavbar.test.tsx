@@ -1,5 +1,6 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+
 import { AppNavbar } from "../AppNavbar";
 
 afterEach(cleanup);

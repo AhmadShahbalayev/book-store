@@ -1,7 +1,9 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
+
 import { Paginated } from "../Paginated";
-import { GET_ALL_BOOKS } from "../../graphql/queries/book.query";
+
+import { GET_ALL_BOOKS } from "../../graphql/book.query";
 import { BrowserRouter } from "react-router-dom";
 import { MockBooks } from "../../mocks/books";
 
