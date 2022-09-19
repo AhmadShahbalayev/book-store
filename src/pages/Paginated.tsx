@@ -29,7 +29,7 @@ export const Paginated: React.FC = () => {
     <Paper>
       <AppBanner label="All programming books in one place!" />
       {loading ? (
-        <Center style={{ height: 250 }}>
+        <Center sx={{ height: 250 }}>
           <Loader variant="bars" />
         </Center>
       ) : (

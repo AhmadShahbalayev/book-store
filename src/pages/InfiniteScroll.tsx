@@ -79,7 +79,7 @@ export const InfiniteScroll: React.FC = () => {
         </SimpleGrid>
         <div ref={intersectorRef} />
         {loading && (
-          <Center style={{ height: 100 }}>
+          <Center sx={{ height: 100 }}>
             <Loader variant="bars" />
           </Center>
         )}

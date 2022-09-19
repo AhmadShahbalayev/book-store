@@ -39,9 +39,9 @@ export const AppHeader: React.FC<IProps> = ({
             mr="xl"
           />
         </MediaQuery>
-        <Group onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <Group onClick={() => navigate("/")} sx={{ cursor: "pointer" }}>
           <Image width={50} height={50} src={imgPath} alt="Logo" />
-          <MediaQuery query="(max-width: 500px)" styles={{ display: "none" }}>
+          <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
             <Title size="h3" data-testid="header-title">
               {title}
             </Title>

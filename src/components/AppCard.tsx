@@ -66,8 +66,7 @@ export const AppCard: React.FC<IProps> = ({ title, image, url }) => {
       p="lg"
       shadow="lg"
       className={classes.card}
-      radius="md"
-      style={{ cursor: "pointer" }}
+      sx={{ cursor: "pointer" }}
       onClick={() => navigate(url)}
     >
       <div

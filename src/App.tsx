@@ -51,7 +51,7 @@ export default function App() {
           toggleColorScheme={toggleColorScheme}
         >
           <MantineProvider
-            theme={{ colorScheme }}
+            theme={{ colorScheme, cursorType: "pointer" }}
             withGlobalStyles
             withNormalizeCSS
           >

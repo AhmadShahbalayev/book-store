@@ -3,15 +3,18 @@ import { Center, MediaQuery, Title } from "@mantine/core";
 export const AppBanner: React.FC<{ label: string }> = ({ label }) => {
   return (
     <Center
-      style={{
+      sx={(theme) => ({
         height: 250,
-        background: "linear-gradient(to bottom left, #0a3b61 0%, #000000 105%)",
+        background:
+          theme.colorScheme === "dark"
+            ? theme.fn.linearGradient(45, "#0a3b61", "#83161c")
+            : theme.fn.linearGradient(45, "red", "blue"),
         borderRadius: 10,
-      }}
+      })}
       mb="md"
       px="md"
     >
-      <MediaQuery query="(max-width: 500px)" styles={{ fontSize: 20 }}>
+      <MediaQuery smallerThan="sm" styles={{ fontSize: 20 }}>
         <Title
           align="center"
           size="h1"
