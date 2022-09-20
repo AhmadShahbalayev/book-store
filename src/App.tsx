@@ -23,6 +23,8 @@ import { apolloClient } from "./libraries/apollo";
 import { queryClient } from "./libraries/react-query";
 
 import logo from "./assets/logo.png";
+import { MachBooks } from "./pages/MachBooks";
+import { MachBookDetails } from "./pages/MachBookDetails";
 
 export default function App() {
   const theme = useMantineTheme();
@@ -73,6 +75,8 @@ export default function App() {
                 <Route path="/" element={<Paginated />} />
                 <Route path="/infinite-scroll" element={<InfiniteScroll />} />
                 <Route path="/:url" element={<BookDetails />} />
+                <Route path="/mach-books" element={<MachBooks />} />
+                <Route path="/mach-books/:url" element={<MachBookDetails />} />
               </Routes>
             </AppShell>
           </MantineProvider>

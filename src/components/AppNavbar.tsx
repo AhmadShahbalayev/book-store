@@ -24,6 +24,12 @@ export const AppNavbar: React.FC<{ opened: boolean }> = ({ opened }) => {
         to="/infinite-scroll"
         active={location.pathname === "/infinite-scroll"}
       />
+      <NavLink
+        label="MACH Books"
+        component={Link}
+        to="/mach-books"
+        active={location.pathname === "/mach-books"}
+      />
     </Navbar>
   );
 };
