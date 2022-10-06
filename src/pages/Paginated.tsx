@@ -14,13 +14,13 @@ import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
 import { GET_ALL_BOOKS } from "../graphql/book.query";
+import { DP_PAGE_SIZE } from "../common/consts";
 
 export const Paginated: React.FC = () => {
-  const PAGE_SIZE = 4;
   const [activePage, setPage] = useState(0);
 
   const { loading, error, data } = useQuery(GET_ALL_BOOKS, {
-    variables: { limit: PAGE_SIZE, skip: activePage * PAGE_SIZE },
+    variables: { limit: DP_PAGE_SIZE, skip: activePage * DP_PAGE_SIZE },
   });
 
   if (error) return <p>{error.message}</p>;
@@ -63,7 +63,7 @@ export const Paginated: React.FC = () => {
               {activePage + 1}
             </Text>
             <Button
-              disabled={data.all_book.total <= PAGE_SIZE * (activePage + 1)}
+              disabled={data.all_book.total <= DP_PAGE_SIZE * (activePage + 1)}
               onClick={() => setPage((prev) => prev + 1)}
             >
               Next

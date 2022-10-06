@@ -25,6 +25,7 @@ import { queryClient } from "./libraries/react-query";
 import logo from "./assets/logo.png";
 import { MachBooks } from "./pages/MachBooks";
 import { MachBookDetails } from "./pages/MachBookDetails";
+import { ROUTES } from "./common/routes";
 
 export default function App() {
   const theme = useMantineTheme();
@@ -72,11 +73,23 @@ export default function App() {
               footer={<AppFooter copyright="Ahmad Shahbalayev" />}
             >
               <Routes>
-                <Route path="/" element={<Paginated />} />
-                <Route path="/infinite-scroll" element={<InfiniteScroll />} />
-                <Route path="/:url" element={<BookDetails />} />
-                <Route path="/mach-books" element={<MachBooks />} />
-                <Route path="/mach-books/:url" element={<MachBookDetails />} />
+                <Route
+                  path={ROUTES.PAGINATED_BOOKS.MAIN}
+                  element={<Paginated />}
+                />
+                <Route
+                  path={ROUTES.INFINITE_SCROLL}
+                  element={<InfiniteScroll />}
+                />
+                <Route
+                  path={ROUTES.PAGINATED_BOOKS.DETAILS}
+                  element={<BookDetails />}
+                />
+                <Route path={ROUTES.MACH_BOOKS.MAIN} element={<MachBooks />} />
+                <Route
+                  path={ROUTES.MACH_BOOKS.DETAILS}
+                  element={<MachBookDetails />}
+                />
               </Routes>
             </AppShell>
           </MantineProvider>

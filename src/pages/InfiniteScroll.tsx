@@ -7,8 +7,7 @@ import { AppBanner } from "../components/AppBanner";
 import { AppCard } from "../components/AppCard";
 
 import { GET_ALL_BOOKS } from "../graphql/book.query";
-
-const PAGE_SIZE = 10;
+import { DIS_PAGE_SIZE } from "../common/consts";
 
 export const InfiniteScroll: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -16,7 +15,7 @@ export const InfiniteScroll: React.FC = () => {
   const { loading, error, data, networkStatus, fetchMore } = useQuery(
     GET_ALL_BOOKS,
     {
-      variables: { limit: PAGE_SIZE, skip: 0 },
+      variables: { limit: DIS_PAGE_SIZE, skip: 0 },
       onCompleted: () => setPage((prev) => prev + 1),
       fetchPolicy: "cache-and-network",
       notifyOnNetworkStatusChange: true,
@@ -34,7 +33,10 @@ export const InfiniteScroll: React.FC = () => {
       data.all_book.items.length < data.all_book.total
     )
       fetchMore({
-        variables: { limit: PAGE_SIZE, skip: page * PAGE_SIZE },
+        variables: {
+          limit: DIS_PAGE_SIZE,
+          skip: page * DIS_PAGE_SIZE,
+        },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) return previousResult;
 

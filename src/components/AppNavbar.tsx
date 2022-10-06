@@ -1,5 +1,6 @@
 import { Navbar, NavLink } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
+import { ROUTES } from "../common/routes";
 
 export const AppNavbar: React.FC<{ opened: boolean }> = ({ opened }) => {
   const location = useLocation();
@@ -15,20 +16,20 @@ export const AppNavbar: React.FC<{ opened: boolean }> = ({ opened }) => {
       <NavLink
         label="Paginated"
         component={Link}
-        to="/"
-        active={location.pathname === "/"}
+        to={ROUTES.PAGINATED_BOOKS.MAIN}
+        active={location.pathname === ROUTES.PAGINATED_BOOKS.MAIN}
       />
       <NavLink
         label="Infinite Scroll"
         component={Link}
-        to="/infinite-scroll"
-        active={location.pathname === "/infinite-scroll"}
+        to={ROUTES.INFINITE_SCROLL}
+        active={location.pathname === ROUTES.INFINITE_SCROLL}
       />
       <NavLink
         label="MACH Books"
         component={Link}
-        to="/mach-books"
-        active={location.pathname === "/mach-books"}
+        to={ROUTES.MACH_BOOKS.MAIN}
+        active={location.pathname === ROUTES.MACH_BOOKS.MAIN}
       />
     </Navbar>
   );

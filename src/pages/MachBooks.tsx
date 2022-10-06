@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { DP_PAGE_SIZE } from "../common/consts";
 import { QUERY_KEYS } from "../common/queryKeys";
 
 import { AppBanner } from "../components/AppBanner";
@@ -16,12 +17,11 @@ import { AppCard } from "../components/AppCard";
 import { MachBooksService } from "../services/machBooks";
 
 export const MachBooks: React.FC = () => {
-  const PAGE_SIZE = 4;
   const [activePage, setPage] = useState(0);
 
   const { isLoading, isError, data } = useQuery(
     [QUERY_KEYS.MACH_BOOKS, activePage],
-    () => MachBooksService.getBooks({ limit: 4, skip: activePage })
+    () => MachBooksService.getBooks({ limit: DP_PAGE_SIZE, skip: activePage })
   );
 
   if (isError) return <p>Error occured...</p>;
@@ -64,7 +64,7 @@ export const MachBooks: React.FC = () => {
               {activePage + 1}
             </Text>
             <Button
-              disabled={data.total <= PAGE_SIZE * (activePage + 1)}
+              disabled={data.total <= DP_PAGE_SIZE * (activePage + 1)}
               onClick={() => setPage((prev) => prev + 1)}
             >
               Next
