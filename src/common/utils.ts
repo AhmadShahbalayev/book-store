@@ -36,3 +36,12 @@ export function setupIntersectionObserverMock({
     value: MockIntersectionObserver,
   });
 }
+
+export const removeDuplicatesFromArrayOfObject = (
+  arr: any[],
+  uniqueKey: string
+) => {
+  return Array.from(
+    new Map(arr.map((item) => [item[uniqueKey], item])).values()
+  );
+};
