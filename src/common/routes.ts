@@ -3,7 +3,7 @@ export const ROUTES = {
     MAIN: "/",
     DETAILS: "/:url",
   },
-  INFINITE_SCROLL: "/infitine-scroll",
+  INFINITE_SCROLL: "/infinite-scroll",
   MACH_BOOKS: {
     MAIN: "/mach-books",
     DETAILS: "/mach-books/:url",

@@ -8,5 +8,22 @@ export const apolloClient = new ApolloClient({
         ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
         : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
   },
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      AllBook: {
+        keyFields: [],
+        fields: {
+          items: {
+            merge(existing: any = [], incoming: any, { readField }) {
+              const merged = [...existing, ...incoming];
+
+              return Array.from(
+                new Map(merged.map((item) => [item.url, item])).values()
+              );
+            },
+          },
+        },
+      },
+    },
+  }),
 });

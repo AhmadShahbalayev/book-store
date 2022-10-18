@@ -43,14 +43,19 @@ export const Paginated: React.FC = () => {
             ]}
             mb="xl"
           >
-            {data.all_book.items.map((item: any) => (
-              <AppCard
-                title={item.title}
-                image={item.imageConnection.edges[0].node.url}
-                url={item.url}
-                key={item.imageConnection.edges[0].node.url}
-              />
-            ))}
+            {data.all_book.items
+              .slice(
+                activePage * DP_PAGE_SIZE,
+                activePage * DP_PAGE_SIZE + DP_PAGE_SIZE
+              )
+              .map((item: any) => (
+                <AppCard
+                  title={item.title}
+                  image={item.imageConnection.edges[0].node.url}
+                  url={item.url}
+                  key={item.imageConnection.edges[0].node.url}
+                />
+              ))}
           </SimpleGrid>
           <Center>
             <Button
