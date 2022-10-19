@@ -37,20 +37,6 @@ export const InfiniteScroll: React.FC = () => {
           limit: DIS_PAGE_SIZE,
           skip: page * DIS_PAGE_SIZE,
         },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return previousResult;
-
-          return {
-            all_book: {
-              __typename: "AllBook",
-              items: [
-                ...previousResult.all_book.items,
-                ...fetchMoreResult.all_book.items,
-              ],
-              total: previousResult.all_book.total,
-            },
-          };
-        },
       });
     // eslint-disable-next-line
   }, [inView]);

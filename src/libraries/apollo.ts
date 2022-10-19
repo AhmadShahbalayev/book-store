@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { removeDuplicatesFromArrayOfObject } from "../common/utils";
 
 export const apolloClient = new ApolloClient({
   uri: `https://graphql.contentstack.com/stacks/${process.env.REACT_APP_API_KEY}?environment=${process.env.NODE_ENV}`,
@@ -8,5 +9,20 @@ export const apolloClient = new ApolloClient({
         ? process.env.REACT_APP_ACCESS_TOKEN_DEVELOPMENT!
         : process.env.REACT_APP_ACCESS_TOKEN_PRODUCTION!,
   },
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      AllBook: {
+        keyFields: [],
+        fields: {
+          items: {
+            merge(existing: any = [], incoming: any, { readField }) {
+              const merged = [...existing, ...incoming];
+
+              return removeDuplicatesFromArrayOfObject(merged, "url");
+            },
+          },
+        },
+      },
+    },
+  }),
 });
