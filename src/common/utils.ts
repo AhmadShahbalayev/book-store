@@ -45,3 +45,9 @@ export const removeDuplicatesFromArrayOfObject = (
     new Map(arr.map((item) => [item[uniqueKey], item])).values()
   );
 };
+
+export const transformCachedDataToPageable = <T>(
+  data: T[],
+  activePage: number,
+  pageSize: number
+): T[] => data.slice(activePage * pageSize, activePage * pageSize + pageSize);

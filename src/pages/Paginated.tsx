@@ -15,6 +15,7 @@ import { AppCard } from "../components/AppCard";
 
 import { GET_ALL_BOOKS } from "../graphql/book.query";
 import { DP_PAGE_SIZE } from "../common/consts";
+import { transformCachedDataToPageable } from "../common/utils";
 
 export const Paginated: React.FC = () => {
   const [activePage, setPage] = useState(0);
@@ -43,19 +44,18 @@ export const Paginated: React.FC = () => {
             ]}
             mb="xl"
           >
-            {data.all_book.items
-              .slice(
-                activePage * DP_PAGE_SIZE,
-                activePage * DP_PAGE_SIZE + DP_PAGE_SIZE
-              )
-              .map((item: any) => (
-                <AppCard
-                  title={item.title}
-                  image={item.imageConnection.edges[0].node.url}
-                  url={item.url}
-                  key={item.imageConnection.edges[0].node.url}
-                />
-              ))}
+            {transformCachedDataToPageable(
+              data.all_book.items,
+              activePage,
+              DP_PAGE_SIZE
+            ).map((item: any) => (
+              <AppCard
+                title={item.title}
+                image={item.imageConnection.edges[0].node.url}
+                url={item.url}
+                key={item.imageConnection.edges[0].node.url}
+              />
+            ))}
           </SimpleGrid>
           <Center>
             <Button
